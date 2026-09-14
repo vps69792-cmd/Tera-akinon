@@ -8,6 +8,8 @@ from io import BytesIO
 from datetime import datetime
 import httpx
 from dotenv import load_dotenv
+from threading import Thread
+from flask import Flask
 
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, Document
 from telegram.ext import (
@@ -21,6 +23,22 @@ from telegram.ext import (
 )
 from telegram.constants import ParseMode, ChatMemberStatus
 from telegram.request import HTTPXRequest
+
+# ---------- RENDER PORT DUMMY SERVER ----------
+web_app = Flask('')
+
+@web_app.route('/')
+def home():
+    return "Bot is alive and running!"
+
+def run_web():
+    port = int(os.environ.get("PORT", 8080))
+    web_app.run(host='0.0.0.0', port=port)
+
+def keep_alive():
+    t = Thread(target=run_web)
+    t.daemon = True
+    t.start()
 
 # Env Load
 load_dotenv()
@@ -156,7 +174,6 @@ async def forward_to_log_channel(context, user_id, username, apk_bytes, filename
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
 
-    # Check Channel Join
     if not await is_user_joined(context, user_id):
         await update.message.reply_text(
             "⚠️ **Access Denied!**\n\nYou must join our official channel to use this bot.",
@@ -558,7 +575,7 @@ async def unknown(update, context):
 def _check_api():
     print(f"[API] Checking {API_STATUS_URL} ...")
     try:
-        r = httpx.get(API_STATUS_URL, headers={"X-API-Key": API_KEY}, timeout=20.0)
+        r = httpx.get(API_STATUS_URL, headers={"X-API-Key": API_KEY}, timeout=5.0)
         if r.status_code == 200:
             print("[API] Connected OK — key valid")
         else:
@@ -568,6 +585,7 @@ def _check_api():
 
 # ---------- MAIN ----------
 def main():
+    keep_alive()  # Render Web Port Fix
     _check_api()
     request = HTTPXRequest(
         connect_timeout=60.0,
