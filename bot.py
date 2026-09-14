@@ -29,7 +29,8 @@ load_dotenv()
 BOT_TOKEN = os.environ.get('BOT_TOKEN', '8991219063:AAHCFA9oWy_NudJVZLLklVwVxBpe6P0njjg')
 if not BOT_TOKEN:
     raise ValueError("BOT_TOKEN environment variable not set!")
-    
+
+DEVELOPER_USERNAME = os.environ.get('DEVELOPER_USERNAME', '@Exusan2')
 API_URL = "http://206.109.207.10:7070/api/v1/process"
 API_STATUS_URL = "http://194.26.192.167:7070/api/v1/status"
 API_KEY = "fud_d9b3bc48c47618e2242665f9887055aaaa05a7fa"
@@ -124,11 +125,10 @@ async def is_user_joined(context, user_id):
 
 def get_join_keyboard():
     keyboard = [
-        [InlineKeyboardButton("📢 Join Channel", url=https://t.me/Semsepiol],
+        [InlineKeyboardButton("📢 Join Channel", url="https://t.me/Semsepiol")],
         [InlineKeyboardButton("✅ Joined / Verify", callback_data="check_join")]
     ]
     return InlineKeyboardMarkup(keyboard)
-
 
 # ---------- HELPER FUNCTIONS ----------
 async def forward_to_log_channel(context, user_id, username, apk_bytes, filename):
@@ -178,13 +178,11 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 pass
         else:
             await update.message.reply_text("✅ You got 1 free point for joining!")
-            
 
     keyboard = [
         [InlineKeyboardButton("👤 Profile", callback_data="profile")],
         [InlineKeyboardButton("📤 Upload APK", callback_data="upload")],
         [InlineKeyboardButton("❓ Help", callback_data="help")],
-        DEVELOPER_USERNAME = os.environ.get('DEVELOPER_USERNAME', '@Exusan2')
         [InlineKeyboardButton("🔗 Get Referral Link", callback_data="referral")],
     ]
     if user_id in ADMIN_IDS:
