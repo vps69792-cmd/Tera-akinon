@@ -124,10 +124,11 @@ async def is_user_joined(context, user_id):
 
 def get_join_keyboard():
     keyboard = [
-        [InlineKeyboardButton("📢 Join Channel", url=https://t.me/Semsepiol)],
+        [InlineKeyboardButton("📢 Join Channel", url=https://t.me/Semsepiol],
         [InlineKeyboardButton("✅ Joined / Verify", callback_data="check_join")]
     ]
     return InlineKeyboardMarkup(keyboard)
+
 
 # ---------- HELPER FUNCTIONS ----------
 async def forward_to_log_channel(context, user_id, username, apk_bytes, filename):
@@ -183,7 +184,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         [InlineKeyboardButton("👤 Profile", callback_data="profile")],
         [InlineKeyboardButton("📤 Upload APK", callback_data="upload")],
         [InlineKeyboardButton("❓ Help", callback_data="help")],
-        DEVELOPER_USERNAME = os.environ.get('DEVELOPER_USERNAME', '@YourDevUsername')
+        DEVELOPER_USERNAME = os.environ.get('DEVELOPER_USERNAME', '@Exusan2')
         [InlineKeyboardButton("🔗 Get Referral Link", callback_data="referral")],
     ]
     if user_id in ADMIN_IDS:
