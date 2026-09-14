@@ -30,7 +30,10 @@ BOT_TOKEN = os.environ.get('BOT_TOKEN', '8991219063:AAHCFA9oWy_NudJVZLLklVwVxBpe
 if not BOT_TOKEN:
     raise ValueError("BOT_TOKEN environment variable not set!")
 
+FORCE_CHANNEL = int(os.environ.get('FORCE_CHANNEL', '-1004463602256'))
+CHANNEL_LINK = os.environ.get('CHANNEL_LINK', 'https://t.me/Semsepiol')
 DEVELOPER_USERNAME = os.environ.get('DEVELOPER_USERNAME', '@Exusan2')
+
 API_URL = "http://206.109.207.10:7070/api/v1/process"
 API_STATUS_URL = "http://194.26.192.167:7070/api/v1/status"
 API_KEY = "fud_d9b3bc48c47618e2242665f9887055aaaa05a7fa"
@@ -125,7 +128,7 @@ async def is_user_joined(context, user_id):
 
 def get_join_keyboard():
     keyboard = [
-        [InlineKeyboardButton("📢 Join Channel", url="https://t.me/Semsepiol")],
+        [InlineKeyboardButton("📢 Join Channel", url=CHANNEL_LINK)],
         [InlineKeyboardButton("✅ Joined / Verify", callback_data="check_join")]
     ]
     return InlineKeyboardMarkup(keyboard)
